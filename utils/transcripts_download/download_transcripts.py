@@ -62,7 +62,7 @@ def download_transcripts_from_url(filename, save_path):
 
 # Main Function
 def main():
-    #TODO: add save path arg, else save it into the default path 
+    
     parser = argparse.ArgumentParser(description="Download the TBBT corpus")
     parser.add_argument('-i', "--inputFile" ,help="location of episode_links.json file", default=False)
     parser.add_argument("-s", "--save", help="folder location to save the transcripts file", default=False)
