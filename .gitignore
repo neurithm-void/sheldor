@@ -5,3 +5,5 @@ utils/transcripts_download/raw_corpus/*
 notebooks/.ipynb_checkpoints/*
 utils/raw_data_processing/processed_corpus/processed_data.csv
 .vscode/*
+utils/download_files/__pycache__/*
+utils/download_files/downloads/*
