@@ -13,3 +13,5 @@ Checkpoints
     - [] clean the dataset, remove all spacing char and unuseful symbols.
     - [] For encoding, use GLoVe 100b vectors, later initialize unk symbols vector by taking random mean. 
 - [] create a preprocessing pipeline.
+
+

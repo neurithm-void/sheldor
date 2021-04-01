@@ -7,3 +7,6 @@ utils/raw_data_processing/processed_corpus/processed_data.csv
 .vscode/*
 utils/download_files/__pycache__/*
 utils/download_files/downloads/*
+utils/download_files/download_glove.py
+downloads/*
+utils/transcripts_download/__pycache__/download_transcripts.cpython-38.pyc
