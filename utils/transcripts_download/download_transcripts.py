@@ -25,68 +25,69 @@ def get_episode_text(season, index, episodeInfo):
 
 
 
-def download_transcripts_from_url(filename, save_path):
+def download_transcripts_from_url(filename, save_path, force):
     
-    try:
-        with open(filename,"r") as file_:
-            episode_info =  json.load(file_)
-            file_.close()
+    if len(os.listdir(save_path)) == 202 or not force:
+        print("transcripts are already downloaded.")
 
-        for season in episode_info:
-            print(f"Downloading transcripts for the {season}")
+    else:
+        try:
+            with open(filename,"r") as file_:
+                episode_info =  json.load(file_)
+                file_.close()
 
-            for idx in range(0,len(episode_info[season])):
-                transcript, episode = get_episode_text(season, idx, episode_info)
-                episode_id = f"{season}_{episode}.txt"
+            for season in episode_info:
+                print(f"Downloading transcripts for the {season}")
 
-                path = os.path.join(save_path, episode_id)
+                for idx in range(0,len(episode_info[season])):
+                    transcript, episode = get_episode_text(season, idx, episode_info)
+                    episode_id = f"{season}_{episode}.txt"
 
-                with open(path,"w",encoding="utf-8") as fh:
-                    fh.write(transcript)
-                    fh.close()
+                    path = os.path.join(save_path, episode_id)
 
-                print("Downloaded the transcripts into raw_corpus directory")
+                    with open(path,"w",encoding="utf-8") as fh:
+                        fh.write(transcript)
+                        fh.close()
 
-                # allTranscripts[ep_id] = transcript
+                    print("Downloaded the transcripts into raw_corpus directory")
 
-        # #TODO: don't store all data into memory
-        # #dump all data into single file
-        # with open("corpus.json","w") as corpus_file:
-        #     json.dump(allTranscripts, corpus_file, indent=4)
-        #     corpus_file.close()
+                    # allTranscripts[ep_id] = transcript
+
+            # #TODO: don't store all data into memory
+            # #dump all data into single file
+            # with open("corpus.json","w") as corpus_file:
+            #     json.dump(allTranscripts, corpus_file, indent=4)
+            #     corpus_file.close()
+        
+        except FileNotFoundError:
+            print(f"Could not file {filename}")
+
+
+
+def download(episodes, save_path, force):
+
+    #if the save dir does not exists, create a new one
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)
     
-    except FileNotFoundError:
-        print(f"Could not file {filename}")
+    download_transcripts_from_url(episodes, save_path, force)
+
+    print(f"Downloaded the transcripts to {save_path} directory")
 
 
 
 # Main Function
 def main():
-    #TODO: add save path arg, else save it into the default path 
+    
     parser = argparse.ArgumentParser(description="Download the TBBT corpus")
-    parser.add_argument('-i', "--inputFile" ,help="location of episode_links.json file", default=False)
-    parser.add_argument("-s", "--save", help="folder location to save the transcripts file", default=False)
+    parser.add_argument('-i', "--inputFile" ,help="location of episode_links.json file", default="episode_links.json")
+    parser.add_argument("-s", "--save", help="folder location to save the transcripts file", default="./raw_corpus")
+    parser.add_argument("-f", "--force", help="forcefully download all files", action='store_true')
 
     args = parser.parse_args()
 
-    #save dir
-    if not args.save:
-        save_path = "./raw_corpus"
-    else:
-        save_path = args.save
-
-    #if the save dir does not exists, create a new one
-    if not os.path.exists(save_path):
-        os.mkdir(save_path)
-
-    if not args.inputFile:
-        download_transcripts_from_url("episode_links.json", save_path)
-    else:
-        download_transcripts_from_url(args.inputfile, save_path)
-
-
-    print(f"Downloaded the transcripts to {save_path} directory")
-
+    download(args.inputFile, args.save, args.force)
+    
 
 
 # Entry point

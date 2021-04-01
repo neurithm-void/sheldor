@@ -1,0 +1,17 @@
+# file to add configurations related to the experiments. 
+
+
+#config for the 
+experiment one:
+    description: experiment with BLSTM text generation with GLoVe as encoding vectors.
+    files_required: #name of files required to download to run this experiment
+      - glove
+    files_download_path: ./downloads
+    episode_links: ./utils/transcripts_download/episode_links.json
+
+
+
+experiment two:
+    description: experiment with Transformers for text generation
+
+  
