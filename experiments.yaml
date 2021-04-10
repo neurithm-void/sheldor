@@ -7,11 +7,18 @@ experiment one:
     files_required: #name of files required to download to run this experiment
       - glove
     files_download_path: ./downloads
+    data_folder_path: ./data
     episode_links: ./utils/transcripts_download/episode_links.json
+    vector_length: 30
+    #add loading glove from custom location option.
+    #add loading train and test csv file from custom location option.
+    vocabulary_path : ./data/vocab.pk
 
 
 
 experiment two:
     description: experiment with Transformers for text generation
-
-  
+    
+    data_folder_path: ./data
+    files_download_path: ./downloads
+    episode_links: ./utils/transcripts_download/episode_links.json
